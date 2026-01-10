@@ -8,7 +8,7 @@ export const Reviews = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between mb-20 gap-8">
           <div className="max-w-xl text-center md:text-left">
-            <h2 className="text-5xl font-black mb-6 italic tracking-tighter">
+            <h2 className="text-5xl font-black mb-6 italic tracking-tighter text-white uppercase">
               ЩО КАЖУТЬ <span className="text-brand-pink">FUTURE LEADERS</span>?
             </h2>
             <p className="text-slate-400 font-medium">
@@ -47,9 +47,8 @@ export const Reviews = () => {
                 </div>
               </div>
 
-              {/* Декоративний елемент "Перевага" */}
               <div className="absolute bottom-6 right-10 opacity-10 group-hover:opacity-30 transition-opacity">
-                <span className="text-4xl font-black italic">TOP SKILL</span>
+                <span className="text-4xl font-black italic text-white">TOP SKILL</span>
               </div>
             </motion.div>
           ))}
