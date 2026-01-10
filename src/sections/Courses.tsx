@@ -1,6 +1,6 @@
 import { COURSES, TELEGRAM_LINK } from '../data/content';
 import { motion } from 'framer-motion';
-import { Rocket, Star, ChevronRight } from 'lucide-react';
+import { Star, ChevronRight } from 'lucide-react';
 
 export const Courses = () => {
   return (
@@ -62,6 +62,8 @@ export const Courses = () => {
                   <motion.a
                     whileTap={{ scale: 0.95 }}
                     href={TELEGRAM_LINK}
+                    target="_blank"
+                    rel="noreferrer"
                     className="flex items-center justify-center gap-3 w-full py-5 bg-white/5 hover:bg-brand-purple rounded-2xl font-black text-sm transition-all border border-white/10 hover:border-brand-purple group/btn"
                   >
                     ДІЗНАТИСЯ БІЛЬШЕ 
