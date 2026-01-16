@@ -1,35 +1,38 @@
-import { motion } from 'framer-motion';
+import { useEffect } from 'react';
+import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
+
 import { Header } from './sections/Header';
 import { Hero } from './sections/Hero';
+import { Method } from './sections/Method'; // Новий імпорт
 import { Courses } from './sections/Courses';
 import { Reviews } from './sections/Reviews';
+import { FAQ } from './sections/FAQ';
 import { Footer } from './sections/Footer';
 
 function App() {
+  useEffect(() => {
+    const lenis = new Lenis();
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+    return () => lenis.destroy();
+  }, []);
+
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="bg-[#0f172a] text-white"
-    >
+    <div className="bg-[#0f172a] text-white min-h-screen selection:bg-brand-purple selection:text-white overflow-x-hidden">
       <Header />
-
       <main>
-        <section id="hero">
-          <Hero />
-        </section>
-        
-        <section id="courses">
-          <Courses />
-        </section>
-        
-        <section id="reviews">
-          <Reviews />
-        </section>
+        <Hero />
+        <Method /> {/* Новий блок */}
+        <Courses />
+        <Reviews />
+        <FAQ />
       </main>
-
       <Footer />
-    </motion.div>
+    </div>
   );
 }
 

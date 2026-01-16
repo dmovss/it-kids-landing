@@ -4,71 +4,44 @@ import { Star, ChevronRight } from 'lucide-react';
 
 export const Courses = () => {
   return (
-    <section id="courses" className="py-32 px-6 relative overflow-hidden">
-      {/* Декоративне сяйво на фоні */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-purple/10 blur-[120px] rounded-full -z-10" />
-
+    <section id="courses" className="py-32 px-6 relative w-full overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-5xl md:text-7xl font-black mb-6 tracking-tighter"
-          >
-            ОБЕРИ СВІЙ <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-yellow to-brand-pink underline decoration-brand-purple/30">ШЛЯХ</span>
-          </motion.h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
-            Кожен курс — це захоплююча пригода, де дитина створює власні світи та вчиться логіці майбутнього.
-          </p>
+        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+          <h2 className="text-5xl md:text-8xl font-black uppercase leading-[0.9] tracking-tighter text-white">
+            ТВІЙ <span className="text-brand-blue">LEVEL UP</span>
+          </h2>
+          <p className="text-slate-400 max-w-sm font-medium">Обери напрямок, який драйвить тебе найбільше. Ми навчимо всьому з нуля.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {COURSES.map((course, index) => (
             <motion.div
               key={course.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ y: -10 }}
-              className="group relative"
+              className="group relative h-full"
             >
-              {/* Ефект світіння при наведенні */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-brand-purple via-brand-pink to-brand-blue rounded-[3rem] blur opacity-20 group-hover:opacity-100 transition duration-500" />
+              <div className={`absolute -inset-1 bg-gradient-to-r ${course.color} rounded-[3rem] blur opacity-10 group-hover:opacity-100 transition duration-500`} />
               
-              <div className="relative bg-[#0f172a] rounded-[2.8rem] p-10 border border-white/10 h-full flex flex-col">
-                <div className="flex justify-between items-start mb-8">
-                  <div className="text-6xl group-hover:scale-110 transition-transform duration-300">{course.icon}</div>
-                  <div className="bg-brand-purple/20 text-brand-purple text-[10px] font-black px-4 py-2 rounded-full border border-brand-purple/30 uppercase tracking-widest">
-                    {course.age}
-                  </div>
-                </div>
+              <div className="relative bg-[#161e31] h-full rounded-[2.8rem] p-10 flex flex-col items-start border border-white/5 group-hover:border-white/20 transition-all">
+                <span className="bg-white/5 border border-white/10 px-4 py-2 rounded-full text-[10px] font-black uppercase mb-8 tracking-widest text-brand-yellow">
+                  {course.badge}
+                </span>
 
-                <h3 className="text-3xl font-black mb-4 leading-tight group-hover:text-brand-yellow transition-colors">
-                  {course.title}
-                </h3>
-                
-                <p className="text-slate-400 mb-8 leading-relaxed font-medium flex-grow">
-                  {course.desc}
-                </p>
+                <div className="text-7xl mb-6 group-hover:scale-110 transition-transform duration-300">{course.icon}</div>
+                <h3 className="text-3xl font-black mb-2 uppercase tracking-tight text-white">{course.title}</h3>
+                <p className="text-brand-purple font-black text-sm mb-6">{course.age}</p>
+                <p className="text-slate-400 mb-10 leading-relaxed font-medium flex-grow">{course.desc}</p>
 
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-widest">
-                    <Star size={14} className="text-brand-yellow fill-brand-yellow" />
-                    5.0 • Перше заняття безкоштовно
+                <div className="w-full pt-6 border-t border-white/5 space-y-6">
+                  <div className="flex items-center gap-2 text-[10px] font-black uppercase text-slate-500">
+                    <Star size={14} className="fill-brand-yellow text-brand-yellow" /> ПЕРШИЙ УРОК БЕЗКОШТОВНО
                   </div>
-                  
-                  <motion.a
-                    whileTap={{ scale: 0.95 }}
-                    href={TELEGRAM_LINK}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center justify-center gap-3 w-full py-5 bg-white/5 hover:bg-brand-purple rounded-2xl font-black text-sm transition-all border border-white/10 hover:border-brand-purple group/btn"
-                  >
-                    ДІЗНАТИСЯ БІЛЬШЕ 
-                    <ChevronRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
-                  </motion.a>
+                  <a href={TELEGRAM_LINK} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 w-full py-5 rounded-2xl bg-white text-black font-black text-sm hover:bg-brand-yellow transition-colors">
+                    ЗАБРОНЮВАТИ <ChevronRight size={18} />
+                  </a>
                 </div>
               </div>
             </motion.div>

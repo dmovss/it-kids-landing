@@ -1,74 +1,95 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { TELEGRAM_LINK } from '../data/content';
-import { Send, Menu, Globe, Zap } from 'lucide-react';
+import { Menu, X, Zap, Send, Phone, MessageCircle } from 'lucide-react';
 
 export const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const links = [
+    { name: 'Програма', href: '#courses' },
+    { name: 'Метод', href: '#method' },
+    { name: 'Відгуки', href: '#reviews' },
+    { name: 'FAQ', href: '#faq' }
+  ];
+
   return (
-    <nav className="fixed top-0 left-0 w-full z-[100] px-4 py-4 md:py-6">
-      <div className="max-w-7xl mx-auto glass rounded-[2rem] px-6 md:px-10 py-4 flex items-center justify-between border border-white/10 shadow-2xl bg-white/5 backdrop-blur-xl">
-        
-        {/* Logo / Бренд */}
-        <div className="flex items-center gap-3 group cursor-pointer">
-          <motion.div 
-            whileHover={{ rotate: 180 }}
-            className="bg-gradient-to-br from-brand-purple to-brand-pink p-2 rounded-xl shadow-lg shadow-brand-purple/20"
-          >
-            <Zap size={24} className="text-white fill-white" />
-          </motion.div>
-          <div className="flex flex-col">
-            <span className="font-black text-xl md:text-2xl leading-none tracking-tighter text-white">
-              FUTURE<span className="text-brand-purple">CODE</span>
-            </span>
-            <span className="text-[10px] font-bold text-brand-yellow tracking-[0.2em] uppercase">
-              Junior Academy
-            </span>
+    <>
+      <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 px-4 ${scrolled ? 'py-3' : 'py-6'}`}>
+        <div className={`max-w-7xl mx-auto transition-all duration-500 rounded-[2.5rem] flex items-center justify-between px-6 md:px-10 ${scrolled ? 'glass py-3 border-white/20' : 'bg-transparent py-0 border-transparent'}`}>
+          
+          <div className="flex items-center gap-3">
+            <div className="bg-brand-purple p-2 rounded-2xl shadow-lg shadow-brand-purple/20">
+              <Zap size={24} className="text-white fill-white" />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-black text-xl md:text-2xl tracking-tighter uppercase leading-none text-white">FUTURE<span className="text-brand-purple">CODE</span></span>
+              <span className="text-[9px] font-bold tracking-[0.3em] uppercase opacity-50 text-white">Academy 2026</span>
+            </div>
           </div>
-        </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center gap-10 font-black text-[11px] uppercase tracking-[0.15em]">
-          <a href="#courses" className="text-white hover:text-brand-yellow transition-colors relative group">
-            Курси
-            <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-brand-yellow transition-all group-hover:w-full"></span>
-          </a>
-          <a href="#reviews" className="text-white hover:text-brand-yellow transition-colors relative group">
-            Відгуки
-            <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-brand-yellow transition-all group-hover:w-full"></span>
-          </a>
-          <a href="#about" className="text-white hover:text-brand-yellow transition-colors relative group">
-            Про нас
-            <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-brand-yellow transition-all group-hover:w-full"></span>
-          </a>
-          
-          <div className="h-6 w-[1px] bg-white/10 mx-2"></div>
-          
-          <div className="flex items-center gap-2 text-brand-blue cursor-help">
-            <Globe size={16} />
-            <span>UA</span>
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex items-center gap-10">
+            <div className="flex items-center gap-8 font-extrabold text-[11px] uppercase tracking-widest text-slate-300">
+              {links.map(link => (
+                <a key={link.name} href={link.href} className="hover:text-brand-purple transition-all relative group">
+                  {link.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-brand-purple transition-all group-hover:w-full" />
+                </a>
+              ))}
+            </div>
+            <div className="h-8 w-[1px] bg-white/10" />
+            <div className="flex items-center gap-4">
+               <a href="tel:+38000000000" className="text-white hover:text-brand-yellow transition-colors"><Phone size={18} /></a>
+               <a href={TELEGRAM_LINK} className="bg-brand-yellow text-black px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-wider hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+                 <Send size={14} className="fill-black" /> ПРИЄДНАТИСЬ
+               </a>
+            </div>
           </div>
-        </div>
 
-        {/* Кнопка дії */}
-        <div className="flex items-center gap-3">
-          <motion.a 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href={TELEGRAM_LINK}
-            target="_blank"
-            rel="noreferrer"
-            className="bg-brand-yellow text-black px-5 md:px-8 py-3 rounded-2xl font-black text-xs md:text-sm flex items-center gap-2 shadow-[0_5px_20px_rgba(255,214,0,0.3)] hover:shadow-brand-yellow/50 transition-all uppercase"
-          >
-            <Send size={18} className="fill-black" /> 
-            <span className="hidden sm:inline italic">Спробувати безкоштовно</span>
-            <span className="sm:hidden italic font-black">Старт</span>
-          </motion.a>
-          
-          {/* Mobile Menu Button */}
-          <button className="lg:hidden p-3 bg-white/5 rounded-2xl text-white hover:bg-white/10 transition-colors">
-            <Menu size={24} />
+          {/* Mobile Button */}
+          <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden w-12 h-12 flex items-center justify-center bg-white/5 rounded-2xl border border-white/10 text-white">
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Fullscreen Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0, clipPath: 'circle(0% at 90% 5%)' }}
+            animate={{ opacity: 1, clipPath: 'circle(150% at 90% 5%)' }}
+            exit={{ opacity: 0, clipPath: 'circle(0% at 90% 5%)' }}
+            className="fixed inset-0 z-[95] bg-[#0f172a] flex flex-col items-center justify-center p-10 lg:hidden"
+          >
+            <div className="flex flex-col gap-8 text-center">
+              {links.map((link, i) => (
+                <motion.a 
+                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
+                  key={link.name} href={link.href} onClick={() => setIsOpen(false)}
+                  className="text-5xl font-black uppercase tracking-tighter hover:text-brand-purple transition-colors text-white"
+                >
+                  {link.name}
+                </motion.a>
+              ))}
+              <motion.a 
+                initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.4 }}
+                href={TELEGRAM_LINK} className="mt-10 bg-brand-purple text-white px-10 py-6 rounded-[2rem] text-2xl font-black uppercase shadow-2xl shadow-brand-purple/40"
+              >
+                ЗАПИСАТИСЬ
+              </motion.a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
