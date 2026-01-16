@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TELEGRAM_LINK } from '../data/content';
-import { Menu, X, Zap, Send, Phone, MessageCircle } from 'lucide-react';
-
+import { Menu, X, Zap, Send, Phone } from 'lucide-react';
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
